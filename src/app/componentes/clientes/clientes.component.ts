@@ -6,11 +6,12 @@ import { ClienteServicio } from '../../servicios/cliente.service';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { Cliente } from '../../modelo/cliente.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [FormsModule, CommonModule, AngularFireModule, AngularFirestoreModule],
+  imports: [FormsModule, CommonModule, AngularFireModule, AngularFirestoreModule, RouterModule],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css',
   providers: [ClienteServicio]
@@ -28,6 +29,18 @@ export class ClientesComponent implements OnInit {
       }
     )
   }
+  getSaldoTotal() {
+    let saldoTotal: number = 0;
+    if (this.clientes) {
+      this.clientes.forEach(cliente => {
+        saldoTotal += cliente.saldo;  // Suma el saldo, usa 0 si saldo es null o undefined
+      });
+    }
+    return saldoTotal;  // Retorna el saldo total
+}
+
+
+
 
 }
 
