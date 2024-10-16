@@ -1,19 +1,21 @@
-
+<!-- Barra de acciones: Botón para abrir el modal de agregar cliente -->
 <section id="actions" class="py-4 mb-4 bg-light">
   <div class="container">
     <div class="row">
       <div class="col-md-3">
         <a href="#" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#agregarClienteModal">
-          <i class="fas fa-plus"></i>Agregar Cliente
+          <i class="fas fa-plus"></i> Agregar Cliente
         </a>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Sección de clientes: muestra una tabla con los datos de cada cliente -->
 <section id="clientes">
   <div class="container">
     <div class="row">
+      <!-- Listado de clientes en formato de tabla -->
       <div class="col-md-9">
         <div class="card">
           <div class="card-header">
@@ -29,13 +31,14 @@
               </tr>
             </thead>
             <tbody>
+              <!-- Itera sobre la lista de clientes para generar filas dinámicamente -->
               <tr *ngFor="let cliente of clientes; let i = index">
                 <td>{{(i+1)}}</td>
                 <td>{{cliente.nombre}} {{cliente.apellido}}</td>
                 <td>{{cliente.saldo | currency: 'MNX': '$'}}</td>
                 <td>
                   <a routerLink="/cliente/editar/{{cliente.id}}" class="btn btn-secondary">
-                    <i class="fas fa-angle-double-right"></i>Editar
+                    <i class="fas fa-angle-double-right"></i> Editar
                   </a>
                 </td>
               </tr>
@@ -43,7 +46,8 @@
           </table>
         </div>
       </div>
-      <!--Tarjetas Laterales-->
+
+      <!-- Tarjetas de resumen: saldo total y cantidad total de clientes -->
       <div class="col-md-3">
         <div class="card text-center bg-danger text-white mb-3">
           <div class="card-body">
@@ -57,13 +61,60 @@
           <div class="card-body">
             <h3>Total Clientes</h3>
             <h4 class="display-4">
-              <i class="fas fa-users"></i>{{clientes.length}}
+              <i class="fas fa-users"></i> {{clientes.length}}
             </h4>
           </div>
         </div>
       </div>
-      <!--Fin de tarjetas laterales-->
+      <!-- Fin de tarjetas laterales -->
     </div>
   </div>
 </section>
 
+<!-- Modal para agregar un nuevo cliente -->
+<div class="modal fade" id="agregarClienteModal" tabindex="-1" aria-labelledby="agregarClienteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title" id="agregarClienteModalLabel">Agregar Cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Formulario para agregar un cliente nuevo, inputs con autocomplete desactivado -->
+      <form action="">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombreField" class="form-control" autocomplete="new-password">
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" name="apellidoField" class="form-control" autocomplete="new-password">
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" name="emailField" class="form-control" autocomplete="new-password">
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="saldo">Saldo</label>
+            <input type="number" name="saldoField" class="form-control" autocomplete="new-password">
+          </div>
+        </div>
+      </form>
+
+      <!-- Botón de guardar dentro del modal -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
