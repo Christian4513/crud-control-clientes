@@ -1,38 +1,40 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'; // Importa el decorador Injectable para permitir la inyección de dependencias
 import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
-import { Cliente } from '../modelo/cliente.model';
-import { map, Observable } from 'rxjs';
+  AngularFirestore, // Importa el módulo AngularFirestore para interactuar con Firestore
+  AngularFirestoreCollection, // Importa AngularFirestoreCollection para manejar colecciones en Firestore
+  AngularFirestoreDocument, // Importa AngularFirestoreDocument para manejar documentos en Firestore
+} from '@angular/fire/compat/firestore'; // Importa compatibilidad con Firestore
+import { Cliente } from '../modelo/cliente.model'; // Importa la interfaz o clase Cliente que representa un cliente
+import { map, Observable } from 'rxjs'; // Importa operadores de RxJS y la clase Observable
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root', // Hace que el servicio esté disponible en toda la aplicación
 })
 export class ClienteServicio {
-  clientesColeccion!: AngularFirestoreCollection<Cliente>;
-  clienteDoc!: AngularFirestoreDocument<Cliente>;
-  clientes!: Observable<Cliente[]>;
-  cliente!: Observable<Cliente>;
+  clientesColeccion!: AngularFirestoreCollection<Cliente>; // Colección de clientes en Firestore
+  clienteDoc!: AngularFirestoreDocument<Cliente>; // Documento de un cliente específico
+  clientes!: Observable<Cliente[]>; // Observable que contendrá la lista de clientes
+  cliente!: Observable<Cliente>; // Observable que contendrá un cliente específico
 
   constructor(private db: AngularFirestore) {
-    this.clientesColeccion = db.collection('clientes', (ref) =>
+    // Constructor que inyecta AngularFirestore
+    this.clientesColeccion = db.collection('clientes', (ref) => // Inicializa la colección de clientes y ordena por nombre
       ref.orderBy('nombre', 'asc')
     );
   }
 
   getClientes(): Observable<Cliente[]> {
-    this.clientes = this.clientesColeccion.snapshotChanges().pipe(
+    // Método para obtener la lista de clientes
+    this.clientes = this.clientesColeccion.snapshotChanges().pipe( // Obtiene los cambios en la colección de clientes
       map((cambios) => {
         return cambios.map((accion) => {
-          const datos = accion.payload.doc.data() as Cliente;
-          datos.id = accion.payload.doc.id;
-          return datos;
+          const datos = accion.payload.doc.data() as Cliente; // Extrae los datos del documento como Cliente
+          datos.id = accion.payload.doc.id; // Asigna el ID del documento al objeto cliente
+          return datos; // Devuelve el cliente con su ID
         });
       })
     );
 
-    return this.clientes;
+    return this.clientes; // Retorna el observable de clientes
   }
 }
