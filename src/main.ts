@@ -11,12 +11,14 @@ import { environment } from './environments/environment';
 
 // Importa las rutas
 import { routes } from './app/app.routes';
+import { ToastrModule } from 'ngx-toastr';
 
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(
       AngularFireModule.initializeApp(environment.firebaseConfig),
-      AngularFirestoreModule
+      AngularFirestoreModule,
+      ToastrModule.forRoot()
     ),
     provideHttpClient(),
     provideRouter(routes), // Agrega el enrutador con tus rutas aquí
