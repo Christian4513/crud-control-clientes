@@ -1,24 +1,38 @@
+<!-- Barra de navegación principal -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
+  <!-- Contenedor para centrar el contenido y adaptarlo al tamaño de la pantalla -->
   <div class="container">
+    <!-- Enlace a la página de inicio que actúa como marca de la barra -->
     <a routerLink="/" class="navbar-brand">Control Clientes</a>
+    <!-- Botón para colapsar la barra en pantallas pequeñas -->
     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+      <!-- Icono del botón de colapso -->
       <span class="navbar-toggler-icon"></span>
     </button>
 
-
+    <!-- Sección colapsable de la barra de navegación -->
     <div class="collapse navbar-collapse" id="navbarCollapse">
+      <!-- Lista de navegación principal -->
       <ul class="navbar-nav">
+        <!-- Elemento de navegación para la página de inicio -->
         <li class="nav-item px-2">
+          <!-- Enlace a la página de inicio -->
           <a routerLink="/" class="nav-link">Inicio</a>
         </li>
       </ul>
 
+      <!-- Lista de navegación para el usuario, alineada a la derecha -->
       <ul class="navbar-nav ms-auto">
+        <!-- Elemento de navegación para el menú desplegable de usuario -->
         <li class="nav-item dropdown mr-3">
+          <!-- Enlace para el menú desplegable -->
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <!-- Icono y texto del enlace -->
             <i class="fas fa-user"></i>Bienvenido
           </a>
+          <!-- Contenido del menú desplegable -->
           <div class="dropdown-menu dropdown-menu-end">
+            <!-- Enlace a la configuración -->
             <a routerLink="/configuracion" class="dropdown-item">
               <i class="fas fa-cog"></i>Configuración
             </a>
@@ -28,3 +42,4 @@
     </div>
   </div>
 </nav>
+

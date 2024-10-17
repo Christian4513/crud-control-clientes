@@ -1,17 +1,18 @@
-import { Routes } from '@angular/router';
-import { TableroComponent } from './componentes/tablero/tablero.component';
-import { LoginComponent } from './componentes/login/login.component';
-import { RegistroComponent } from './componentes/registro/registro.component';
-import { ConfiguracionComponent } from './componentes/configuracion/configuracion.component';
-import { EditarClienteComponent } from './componentes/editar-cliente/editar-cliente.component';
-import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado.component';
+import { Routes } from '@angular/router'; // Importa la interfaz Routes para definir las rutas de la aplicación
+import { TableroComponent } from './componentes/tablero/tablero.component'; // Importa el componente del tablero
+import { LoginComponent } from './componentes/login/login.component'; // Importa el componente de inicio de sesión
+import { RegistroComponent } from './componentes/registro/registro.component'; // Importa el componente de registro
+import { ConfiguracionComponent } from './componentes/configuracion/configuracion.component'; // Importa el componente de configuración
+import { EditarClienteComponent } from './componentes/editar-cliente/editar-cliente.component'; // Importa el componente para editar clientes
+import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado.component'; // Importa el componente para manejar rutas no encontradas
 
+// Define las rutas de la aplicación
 export const routes: Routes = [
-  {path: '', component: TableroComponent},
-  {path: 'login',component: LoginComponent},
-  {path: 'registrarse', component: RegistroComponent},
-  {path: 'configuracion', component: ConfiguracionComponent},
-  {path: 'registrarse', component: RegistroComponent},
-  {path: 'cliente/editar/:id', component: EditarClienteComponent},
-  {path: '**', component: NoEncontradoComponent},
+  { path: '', component: TableroComponent }, // Ruta por defecto que muestra el TableroComponent
+  { path: 'login', component: LoginComponent }, // Ruta para iniciar sesión que muestra el LoginComponent
+  { path: 'registrarse', component: RegistroComponent }, // Ruta para registrarse que muestra el RegistroComponent
+  { path: 'configuracion', component: ConfiguracionComponent }, // Ruta para la configuración que muestra el ConfiguracionComponent
+  { path: 'cliente/editar/:id', component: EditarClienteComponent }, // Ruta para editar un cliente, con un parámetro de ruta para el ID del cliente
+  { path: '**', component: NoEncontradoComponent }, // Ruta wildcard que muestra el NoEncontradoComponent para cualquier ruta no definida
 ];
+
