@@ -68,6 +68,7 @@ saldo: any;
     return saldoTotal; // Retorna el saldo total calculado
   }
 
+  // no se actualiza la tabla, tengo que ver por que no se actualiza.
   agregar(clienteForm: { value: Cliente; valid: boolean | null }) {
     if (!clienteForm.valid) {
       this.toastSvc.error(
@@ -79,7 +80,8 @@ saldo: any;
         }
       );
     } else {
-      //Se agregara despues, voy en video 15
+      this.clientesServicio.agregarCliente(clienteForm.value);
+
     }
   }
 
@@ -89,6 +91,6 @@ saldo: any;
       event.preventDefault();
     }
   }
-  
+
 
 }

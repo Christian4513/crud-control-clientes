@@ -37,4 +37,9 @@ export class ClienteServicio {
 
     return this.clientes; // Retorna el observable de clientes
   }
+
+  agregarCliente(cliente: Cliente){
+    this.clientesColeccion.add(cliente);
+
+  }
 }
