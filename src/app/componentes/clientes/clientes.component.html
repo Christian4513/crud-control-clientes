@@ -105,7 +105,8 @@
 </section>
 
 <!-- Modal que se abrirá para agregar un cliente -->
-<div class="modal fade" id="agregarClienteModal" tabindex="-1" aria-labelledby="agregarClienteModalLabel" aria-hidden="true">
+<div class="modal fade" id="agregarClienteModal" tabindex="-1" aria-labelledby="agregarClienteModalLabel"
+  aria-hidden="true">
   <!-- Diálogo del modal -->
   <div class="modal-dialog">
     <!-- Contenido del modal -->
@@ -118,8 +119,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
+
+
       <!-- Formulario que enviará los datos del nuevo cliente -->
-      <form action="">
+      <form #clienteForm="ngForm" (ngSubmit)="agregar(clienteForm)">
         <!-- Cuerpo del modal que contiene el formulario -->
         <div class="modal-body">
           <!-- Grupo de formulario para el nombre -->
@@ -127,7 +130,21 @@
             <!-- Etiqueta para el campo de nombre -->
             <label for="nombre">Nombre</label>
             <!-- Campo de texto para ingresar el nombre -->
-            <input type="text" name="nombreField" class="form-control" autocomplete="new-password">
+            <input
+              type="text"
+              name="nombreField"
+              class="form-control"
+              autocomplete="new-password"
+              #nombre="ngModel"
+              [(ngModel)]="cliente.nombre"
+              [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required
+              minlength="2">
+            <div [hidden]="!nombre.errors?.['required']" class="invalid-feedback">
+              Nombre requerido
+            </div>
+            <div [hidden]="!nombre.errors?.['minlength']" class="invalid-feedback">
+              Debe contener al menos 2 caracteres
+            </div>
           </div>
         </div>
 
@@ -138,7 +155,22 @@
             <!-- Etiqueta para el campo de apellido -->
             <label for="apellido">Apellido</label>
             <!-- Campo de texto para ingresar el apellido -->
-            <input type="text" name="apellidoField" class="form-control" autocomplete="new-password">
+            <input
+              type="text"
+              name="apellidoField"
+              class="form-control"
+              autocomplete="new-password"
+              #apellido="ngModel"
+              [(ngModel)]="cliente.apellido"
+              [ngClass]="{'is-invalid': apellido.errors && apellido.touched}"
+              required
+              minlength="2">
+              <div [hidden]="!apellido.errors?.['required']" class="invalid-feedback">
+                Apellido requerido
+              </div>
+              <div [hidden]="!apellido.errors?.['minlength']" class="invalid-feedback">
+                Debe contener al menos 2 caracteres
+              </div>
           </div>
         </div>
 
@@ -149,7 +181,23 @@
             <!-- Etiqueta para el campo de email -->
             <label for="email">Email</label>
             <!-- Campo de texto para ingresar el email -->
-            <input type="text" name="emailField" class="form-control" autocomplete="new-password">
+            <input
+              type="text"
+              name="emailField"
+              class="form-control"
+              autocomplete="new-password"
+              #email="ngModel"
+              [(ngModel)]="cliente.email"
+              [ngClass]="{'is-invalid': email.errors && email.touched}"
+              required
+              minlength="2"
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+              <div [hidden]="!email.errors?.['required']" class="invalid-feedback">
+                Email requerido
+              </div>
+              <div [hidden]="!email.errors?.['pattern']" class="invalid-feedback">
+                El correo debe tener un formato válido (ej: nombre&#64;dominio.com)
+              </div>
           </div>
         </div>
 
@@ -160,16 +208,28 @@
             <!-- Etiqueta para el campo de saldo -->
             <label for="saldo">Saldo</label>
             <!-- Campo numérico para ingresar el saldo -->
-            <input type="number" name="saldoField" class="form-control" autocomplete="new-password">
+            <input
+              type="number"
+              name="saldoField"
+              class="form-control"
+              autocomplete="new-password"
+              #saldo="ngModel"
+              [(ngModel)]="cliente.saldo"
+              [ngClass]="{'is-invalid': saldo.errors && saldo.touched}"
+              required
+              min="0"
+              (keypress)="soloNumeros($event)">
+              <div [hidden]="!saldo.errors?.['required']" class="invalid-feedback">
+                Saldo requerido
+              </div>
           </div>
         </div>
+        <!-- Pie del modal -->
+        <div class="modal-footer">
+          <!-- Botón para guardar los datos del nuevo cliente -->
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
       </form>
-
-      <!-- Pie del modal -->
-      <div class="modal-footer">
-        <!-- Botón para guardar los datos del nuevo cliente -->
-        <button type="submit" class="btn btn-primary">Guardar</button>
-      </div>
     </div>
   </div>
 </div>

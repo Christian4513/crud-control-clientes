@@ -18,7 +18,8 @@ import { ToastrService } from 'ngx-toastr'; // Importa ToastrService
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [ // Importa módulos necesarios para este componente
+  imports: [
+    // Importa módulos necesarios para este componente
     FormsModule,
     CommonModule,
     AngularFireModule,
@@ -31,25 +32,63 @@ import { ToastrService } from 'ngx-toastr'; // Importa ToastrService
 })
 export class ClientesComponent implements OnInit {
   clientes: Cliente[] = []; // Arreglo que contendrá la lista de clientes
+  cliente: Cliente = {
+    id: '',
+    nombre: '',
+    apellido: '',
+    email: '',
+    saldo: 0,
+  };
 
+  // Inyecciónes de servicios
   toastSvc = inject(ToastrService); // Inyección del servicio ToastrService para mostrar notificaciones
+  clientesServicio = inject(ClienteServicio);
+saldo: any;
 
-  constructor(private clientesServicio: ClienteServicio) {} // Constructor del componente que inyecta el servicio ClienteServicio
+  constructor() {}
 
-  ngOnInit() { // Método del ciclo de vida que se ejecuta al inicializar el componente
-    this.clientesServicio.getClientes().subscribe((clientes) => { // Suscribe a los cambios en la colección de clientes desde el servicio
+  ngOnInit() {
+    // Método del ciclo de vida que se ejecuta al inicializar el componente
+    this.clientesServicio.getClientes().subscribe((clientes) => {
+      // Suscribe a los cambios en la colección de clientes desde el servicio
       this.clientes = clientes; // Asigna la lista de clientes recibida
     });
   }
 
-  getSaldoTotal() { // Método que calcula el saldo total de todos los clientes
+  getSaldoTotal() {
+    // Método que calcula el saldo total de todos los clientes
     let saldoTotal: number = 0; // Inicializa el saldo total en 0
-    if (this.clientes) { // Verifica si la lista de clientes no está vacía
-      this.clientes.forEach((cliente) => { // Recorre cada cliente en la lista
+    if (this.clientes) {
+      // Verifica si la lista de clientes no está vacía
+      this.clientes.forEach((cliente) => {
+        // Recorre cada cliente en la lista
         saldoTotal += cliente.saldo; // Suma el saldo del cliente actual
       });
     }
     return saldoTotal; // Retorna el saldo total calculado
   }
-}
 
+  agregar(clienteForm: { value: Cliente; valid: boolean | null }) {
+    if (!clienteForm.valid) {
+      this.toastSvc.error(
+        'Por favor llenar el formulario correctamente',
+        'Error de validación',
+        {
+          timeOut: 4000,
+          positionClass: 'toast-top-right',
+        }
+      );
+    } else {
+      //Se agregara despues, voy en video 15
+    }
+  }
+
+  soloNumeros(event: KeyboardEvent) {
+    const key = event.key;
+    if (!/^[0-9]$/.test(key)) { // Solo permite números entre 0 y 9
+      event.preventDefault();
+    }
+  }
+  
+
+}
