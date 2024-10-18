@@ -1,6 +1,6 @@
 // Importa decoradores y funciones necesarias de Angular
-import { Component, inject, OnInit } from '@angular/core'; // Importa el decorador Component y las interfaces OnInit e inject
-import { FormsModule } from '@angular/forms'; // Importa el módulo de formularios de Angular
+import { Component, ElementRef, inject, OnInit, ViewChild, viewChild } from '@angular/core'; // Importa el decorador Component y las interfaces OnInit e inject
+import { FormsModule, NgForm } from '@angular/forms'; // Importa el módulo de formularios de Angular
 import { CommonModule } from '@angular/common'; // Importa el módulo común de Angular
 
 // Importa el servicio de clientes que maneja la lógica de negocio
@@ -14,6 +14,7 @@ import { Cliente } from '../../modelo/cliente.model'; // Importa la interfaz Cli
 import { RouterModule } from '@angular/router'; // Importa RouterModule
 // Importa el servicio de toastr para mostrar notificaciones
 import { ToastrService } from 'ngx-toastr'; // Importa ToastrService
+import { NumerosService } from '../../servicios/numeros.service';
 
 @Component({
   selector: 'app-clientes',
@@ -40,10 +41,14 @@ export class ClientesComponent implements OnInit {
     saldo: 0,
   };
 
+  @ViewChild('clienteForm') clienteForm!: NgForm;
+  @ViewChild('botonCerrar') botonCerrar!: ElementRef;
+
+
   // Inyecciónes de servicios
   toastSvc = inject(ToastrService); // Inyección del servicio ToastrService para mostrar notificaciones
   clientesServicio = inject(ClienteServicio);
-saldo: any;
+  numeros = inject(NumerosService);
 
   constructor() {}
 
@@ -81,15 +86,17 @@ saldo: any;
       );
     } else {
       this.clientesServicio.agregarCliente(clienteForm.value);
-
+      this.clienteForm.resetForm();
+      this.cerrarModal();
     }
   }
 
   soloNumeros(event: KeyboardEvent) {
-    const key = event.key;
-    if (!/^[0-9]$/.test(key)) { // Solo permite números entre 0 y 9
-      event.preventDefault();
-    }
+    this.numeros.soloNumeros(event);
+  }
+
+  cerrarModal(){
+    this.botonCerrar.nativeElement.click();
   }
 
 
