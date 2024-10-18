@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NumerosService } from '../../servicios/numeros.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-cliente',
@@ -63,9 +64,25 @@ export class EditarClienteComponent implements OnInit {
   }
 
   eliminar() {
-    if (confirm('¿Seguro que desea eliminar el cliente?')) {
-      this.clientesServicio.eliminarCliente(this.cliente);
-      this.router.navigate(['/']);
-    }
-  }
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¡No podrás revertir esto!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.clientesServicio.eliminarCliente(this.cliente).then(() => {
+                console.log("Cliente eliminado");
+            }).catch((error: any) => {
+                console.error('Error al eliminar el cliente:', error);
+                Swal.fire('Error', 'No se pudo eliminar el cliente.', 'error');
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            console.log("Eliminación cancelada");
+        }
+    });
+}
 }

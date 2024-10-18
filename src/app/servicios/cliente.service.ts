@@ -68,8 +68,8 @@ export class ClienteServicio {
     this.clienteDoc.update(cliente);
   }
 
-  eliminarCliente(cliente: Cliente){
+  eliminarCliente(cliente: Cliente): Promise<void> {
     this.clienteDoc = this.db.doc(`clientes/${cliente.id}`);
-    this.clienteDoc.delete();
-  }
+    return this.clienteDoc.delete();
+}
 }
