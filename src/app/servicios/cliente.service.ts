@@ -18,14 +18,18 @@ export class ClienteServicio {
 
   constructor(private db: AngularFirestore) {
     // Constructor que inyecta AngularFirestore
-    this.clientesColeccion = db.collection('clientes', (ref) => // Inicializa la colección de clientes y ordena por nombre
-      ref.orderBy('nombre', 'asc')
+    this.clientesColeccion = db.collection(
+      'clientes',
+      (
+        ref // Inicializa la colección de clientes y ordena por nombre
+      ) => ref.orderBy('nombre', 'asc')
     );
   }
 
   getClientes(): Observable<Cliente[]> {
     // Método para obtener la lista de clientes
-    this.clientes = this.clientesColeccion.snapshotChanges().pipe( // Obtiene los cambios en la colección de clientes
+    this.clientes = this.clientesColeccion.snapshotChanges().pipe(
+      // Obtiene los cambios en la colección de clientes
       map((cambios) => {
         return cambios.map((accion) => {
           const datos = accion.payload.doc.data() as Cliente; // Extrae los datos del documento como Cliente
@@ -38,8 +42,34 @@ export class ClienteServicio {
     return this.clientes; // Retorna el observable de clientes
   }
 
-  agregarCliente(cliente: Cliente){
+  agregarCliente(cliente: Cliente) {
     this.clientesColeccion.add(cliente);
+  }
 
+  getCliente(id: string) {
+    this.clienteDoc = this.db.doc<Cliente>(`clientes/${id}`);
+    this.cliente = this.clienteDoc.snapshotChanges().pipe(
+      map((accion) => {
+        if (accion.payload.exists === false) {
+          throw new Error('Cliente no encontrado'); // O devuelve un objeto vacío
+        } else {
+          const datos = accion.payload.data() as Cliente;
+          datos.id = accion.payload.id;
+          return datos;
+        }
+      })
+    );
+
+    return this.cliente;
+  }
+
+  modificarCliente(cliente: Cliente){
+    this.clienteDoc = this.db.doc(`clientes/${cliente.id}`);
+    this.clienteDoc.update(cliente);
+  }
+
+  eliminarCliente(cliente: Cliente){
+    this.clienteDoc = this.db.doc(`clientes/${cliente.id}`);
+    this.clienteDoc.delete();
   }
 }
