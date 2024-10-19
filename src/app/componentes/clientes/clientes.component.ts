@@ -1,5 +1,12 @@
 // Importa decoradores y funciones necesarias de Angular
-import { Component, ElementRef, inject, OnInit, ViewChild, viewChild } from '@angular/core'; // Importa el decorador Component y las interfaces OnInit e inject
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+  viewChild,
+} from '@angular/core'; // Importa el decorador Component y las interfaces OnInit e inject
 import { FormsModule, NgForm } from '@angular/forms'; // Importa el módulo de formularios de Angular
 import { CommonModule } from '@angular/common'; // Importa el módulo común de Angular
 
@@ -16,6 +23,8 @@ import { RouterModule } from '@angular/router'; // Importa RouterModule
 import { ToastrService } from 'ngx-toastr'; // Importa ToastrService
 import { NumerosService } from '../../servicios/numeros.service';
 
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @Component({
   selector: 'app-clientes',
   standalone: true,
@@ -26,6 +35,7 @@ import { NumerosService } from '../../servicios/numeros.service';
     AngularFireModule,
     AngularFirestoreModule,
     RouterModule,
+    NgxPaginationModule,
   ],
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css'],
@@ -41,9 +51,12 @@ export class ClientesComponent implements OnInit {
     saldo: 0,
   };
 
+  // Cambiamos el nombre de la variable a listaClientes
+  page: number = 1; // Página actual
+  pageSize: number = 5; // Cantidad de elementos por página
+
   @ViewChild('clienteForm') clienteForm!: NgForm;
   @ViewChild('botonCerrar') botonCerrar!: ElementRef;
-
 
   // Inyecciónes de servicios
   toastSvc = inject(ToastrService); // Inyección del servicio ToastrService para mostrar notificaciones
@@ -95,9 +108,7 @@ export class ClientesComponent implements OnInit {
     this.numeros.soloNumeros(event);
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.botonCerrar.nativeElement.click();
   }
-
-
 }
