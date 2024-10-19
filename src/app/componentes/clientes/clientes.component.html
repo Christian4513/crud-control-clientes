@@ -27,9 +27,12 @@
         <!-- Tarjeta para contener el listado de clientes -->
         <div class="card">
           <!-- Encabezado de la tarjeta -->
-          <div class="card-header">
-            <!-- Título de la sección de clientes -->
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <!-- Título de la sección de clientes a la izquierda -->
             <h4>Listado de Clientes</h4>
+
+            <!-- Input para búsqueda a la derecha -->
+            <input type="text" [(ngModel)]="searchText" class="form-control w-25" placeholder="Buscar cliente...">
           </div>
           <!-- Tabla que muestra los clientes con estilo a rayas -->
           <table class="table table-striped">
@@ -50,7 +53,7 @@
             <tbody>
               <!-- Utilizamos el pipe de paginación para iterar sobre los clientes con paginación -->
               <tr
-                *ngFor="let cliente of clientes | paginate: { itemsPerPage: pageSize, currentPage: page }; let i = index">
+                *ngFor="let cliente of filteredClientes | paginate: { itemsPerPage: pageSize, currentPage: page }; let i = index">
                 <td>{{(i+1)}}</td>
                 <td>{{cliente.nombre}} {{cliente.apellido}}</td>
                 <td>{{cliente.saldo | currency: 'MNX': '$'}}</td>
@@ -64,10 +67,16 @@
           </table>
           <!-- Componente HTML de Clientes -->
           <div class="clientes-container">
-            <!-- Tu tabla o lista de clientes aquí -->
 
-            <!-- Control de paginación -->
-            <div class="d-flex justify-content-center mt-4">
+            <div class="d-flex justify-content-center align-items-center mt-4">
+              <!-- Selector de cantidad de elementos por página -->
+              <select [(ngModel)]="pageSize" class="form-select w-auto me-3">
+                <option [value]="5">5</option>
+                <option [value]="10">10</option>
+                <option [value]="20">20</option>
+              </select>
+
+              <!-- Controles de paginación -->
               <pagination-controls (pageChange)="page = $event" [directionLinks]="true" [autoHide]="true">
               </pagination-controls>
             </div>

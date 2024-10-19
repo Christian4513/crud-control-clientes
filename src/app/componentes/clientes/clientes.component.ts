@@ -55,6 +55,8 @@ export class ClientesComponent implements OnInit {
   page: number = 1; // Página actual
   pageSize: number = 5; // Cantidad de elementos por página
 
+  searchText: string = '';
+
   @ViewChild('clienteForm') clienteForm!: NgForm;
   @ViewChild('botonCerrar') botonCerrar!: ElementRef;
 
@@ -62,6 +64,7 @@ export class ClientesComponent implements OnInit {
   toastSvc = inject(ToastrService); // Inyección del servicio ToastrService para mostrar notificaciones
   clientesServicio = inject(ClienteServicio);
   numeros = inject(NumerosService);
+
 
   constructor() {}
 
@@ -110,5 +113,21 @@ export class ClientesComponent implements OnInit {
 
   cerrarModal() {
     this.botonCerrar.nativeElement.click();
+  }
+
+  // Método para obtener clientes filtrados
+  get filteredClientes() {
+    // Si no hay texto de búsqueda, retornar todos los clientes
+    if (!this.searchText) {
+      return this.clientes;
+    }
+
+    // Filtrar clientes que coincidan con el texto de búsqueda
+    return this.clientes.filter(cliente =>
+      cliente.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      cliente.apellido.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      cliente.email.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      cliente.saldo.toString().includes(this.searchText)
+    );
   }
 }
