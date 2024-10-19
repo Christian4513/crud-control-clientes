@@ -63,7 +63,7 @@ export class ClienteServicio {
     return this.cliente;
   }
 
-  modificarCliente(cliente: Cliente){
+  modificarCliente(cliente: Cliente) {
     this.clienteDoc = this.db.doc(`clientes/${cliente.id}`);
     this.clienteDoc.update(cliente);
   }
@@ -71,5 +71,5 @@ export class ClienteServicio {
   eliminarCliente(cliente: Cliente): Promise<void> {
     this.clienteDoc = this.db.doc(`clientes/${cliente.id}`);
     return this.clienteDoc.delete();
-}
+  }
 }

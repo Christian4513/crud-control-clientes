@@ -48,25 +48,30 @@
             </thead>
             <!-- Cuerpo de la tabla donde se llenarán los datos -->
             <tbody>
-              <!-- Genera una fila por cada cliente en la lista -->
-              <tr *ngFor="let cliente of clientes; let i = index">
-                <!-- Muestra el índice del cliente (1-based) -->
+              <!-- Utilizamos el pipe de paginación para iterar sobre los clientes con paginación -->
+              <tr
+                *ngFor="let cliente of clientes | paginate: { itemsPerPage: pageSize, currentPage: page }; let i = index">
                 <td>{{(i+1)}}</td>
-                <!-- Muestra el nombre y apellido del cliente -->
                 <td>{{cliente.nombre}} {{cliente.apellido}}</td>
-                <!-- Muestra el saldo del cliente formateado como moneda -->
                 <td>{{cliente.saldo | currency: 'MNX': '$'}}</td>
-                <!-- Columna para el botón de editar -->
                 <td>
-                  <!-- Botón que redirige a la página de editar cliente -->
                   <a routerLink="/cliente/editar/{{cliente.id}}" class="btn btn-secondary">
-                    <!-- Icono y texto del botón -->
                     <i class="fas fa-angle-double-right"></i> Editar
                   </a>
                 </td>
               </tr>
             </tbody>
           </table>
+          <!-- Componente HTML de Clientes -->
+          <div class="clientes-container">
+            <!-- Tu tabla o lista de clientes aquí -->
+
+            <!-- Control de paginación -->
+            <div class="d-flex justify-content-center mt-4">
+              <pagination-controls (pageChange)="page = $event" [directionLinks]="true" [autoHide]="true">
+              </pagination-controls>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -130,14 +135,8 @@
             <!-- Etiqueta para el campo de nombre -->
             <label for="nombre">Nombre</label>
             <!-- Campo de texto para ingresar el nombre -->
-            <input
-              type="text"
-              name="nombre"
-              class="form-control"
-              autocomplete="new-password"
-              #nombre="ngModel"
-              [(ngModel)]="cliente.nombre"
-              [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required
+            <input type="text" name="nombre" class="form-control" autocomplete="new-password" #nombre="ngModel"
+              [(ngModel)]="cliente.nombre" [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required
               minlength="2">
             <div [hidden]="!nombre.errors?.['required']" class="invalid-feedback">
               Nombre requerido
@@ -155,22 +154,15 @@
             <!-- Etiqueta para el campo de apellido -->
             <label for="apellido">Apellido</label>
             <!-- Campo de texto para ingresar el apellido -->
-            <input
-              type="text"
-              name="apellido"
-              class="form-control"
-              autocomplete="new-password"
-              #apellido="ngModel"
-              [(ngModel)]="cliente.apellido"
-              [ngClass]="{'is-invalid': apellido.errors && apellido.touched}"
-              required
+            <input type="text" name="apellido" class="form-control" autocomplete="new-password" #apellido="ngModel"
+              [(ngModel)]="cliente.apellido" [ngClass]="{'is-invalid': apellido.errors && apellido.touched}" required
               minlength="2">
-              <div [hidden]="!apellido.errors?.['required']" class="invalid-feedback">
-                Apellido requerido
-              </div>
-              <div [hidden]="!apellido.errors?.['minlength']" class="invalid-feedback">
-                Debe contener al menos 2 caracteres
-              </div>
+            <div [hidden]="!apellido.errors?.['required']" class="invalid-feedback">
+              Apellido requerido
+            </div>
+            <div [hidden]="!apellido.errors?.['minlength']" class="invalid-feedback">
+              Debe contener al menos 2 caracteres
+            </div>
           </div>
         </div>
 
@@ -181,23 +173,15 @@
             <!-- Etiqueta para el campo de email -->
             <label for="email">Email</label>
             <!-- Campo de texto para ingresar el email -->
-            <input
-              type="text"
-              name="email"
-              class="form-control"
-              autocomplete="new-password"
-              #email="ngModel"
-              [(ngModel)]="cliente.email"
-              [ngClass]="{'is-invalid': email.errors && email.touched}"
-              required
-              minlength="2"
-              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
-              <div [hidden]="!email.errors?.['required']" class="invalid-feedback">
-                Email requerido
-              </div>
-              <div [hidden]="!email.errors?.['pattern']" class="invalid-feedback">
-                El correo debe tener un formato válido (ej: nombre&#64;dominio.com)
-              </div>
+            <input type="text" name="email" class="form-control" autocomplete="new-password" #email="ngModel"
+              [(ngModel)]="cliente.email" [ngClass]="{'is-invalid': email.errors && email.touched}" required
+              minlength="2" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+            <div [hidden]="!email.errors?.['required']" class="invalid-feedback">
+              Email requerido
+            </div>
+            <div [hidden]="!email.errors?.['pattern']" class="invalid-feedback">
+              El correo debe tener un formato válido (ej: nombre&#64;dominio.com)
+            </div>
           </div>
         </div>
 
@@ -208,20 +192,12 @@
             <!-- Etiqueta para el campo de saldo -->
             <label for="saldo">Saldo</label>
             <!-- Campo numérico para ingresar el saldo -->
-            <input
-              type="number"
-              name="saldo"
-              class="form-control"
-              autocomplete="new-password"
-              #saldo="ngModel"
-              [(ngModel)]="cliente.saldo"
-              [ngClass]="{'is-invalid': saldo.errors && saldo.touched}"
-              required
-              min="0"
+            <input type="number" name="saldo" class="form-control" autocomplete="new-password" #saldo="ngModel"
+              [(ngModel)]="cliente.saldo" [ngClass]="{'is-invalid': saldo.errors && saldo.touched}" required min="0"
               (keypress)="soloNumeros($event)">
-              <div [hidden]="!saldo.errors?.['required']" class="invalid-feedback">
-                Saldo requerido
-              </div>
+            <div [hidden]="!saldo.errors?.['required']" class="invalid-feedback">
+              Saldo requerido
+            </div>
           </div>
         </div>
         <!-- Pie del modal -->
@@ -233,4 +209,3 @@
     </div>
   </div>
 </div>
-

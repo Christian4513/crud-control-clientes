@@ -65,24 +65,27 @@ export class EditarClienteComponent implements OnInit {
 
   eliminar() {
     Swal.fire({
-        title: '¿Estás seguro?',
-        text: '¡No podrás revertir esto!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar',
-        reverseButtons: true,
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
     }).then((result) => {
-        if (result.isConfirmed) {
-            this.clientesServicio.eliminarCliente(this.cliente).then(() => {
-                console.log("Cliente eliminado");
-            }).catch((error: any) => {
-                console.error('Error al eliminar el cliente:', error);
-                Swal.fire('Error', 'No se pudo eliminar el cliente.', 'error');
-            });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            console.log("Eliminación cancelada");
-        }
+      if (result.isConfirmed) {
+        this.clientesServicio
+          .eliminarCliente(this.cliente)
+          .then(() => {
+            console.log('Cliente eliminado');
+          })
+          .catch((error: any) => {
+            console.error('Error al eliminar el cliente:', error);
+            Swal.fire('Error', 'No se pudo eliminar el cliente.', 'error');
+          });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        console.log('Eliminación cancelada');
+      }
     });
-}
+  }
 }

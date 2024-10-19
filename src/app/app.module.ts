@@ -6,6 +6,7 @@ import { FirestoreModule, FirestoreSettings } from '@angular/fire/firestore'; //
 import { AngularFireAuthModule } from '@angular/fire/compat/auth'; // Importa AngularFireAuthModule para la autenticación con Firebase
 import { FormsModule } from '@angular/forms'; // Importa FormsModule para gestionar formularios en Angular
 
+
 @NgModule({
   declarations: [],
   imports: [
@@ -16,4 +17,4 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule para gestio
     FirestoreModule, // Importa el módulo de Firestore para utilizar la base de datos de Firebase
   ]
 })
-export class AppModule { } 
+export class AppModule { }
