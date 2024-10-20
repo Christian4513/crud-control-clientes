@@ -51,21 +51,19 @@ export class EditarClienteComponent implements OnInit {
   // Método para guardar los cambios en el formulario de cliente.
   guardar(clienteForm: NgForm) {
     // Validación: Si el formulario no es válido, muestra una notificación de error.
-    if (!clienteForm.valid) {
-      this.toastSvc.error(
-        'Por favor llenar el formulario correctamente',
-        'Error de validación',
-        {
-          timeOut: 4000,
-          positionClass: 'toast-top-right', // Configuración de la posición de la notificación.
-        }
-      );
-    } else {
+    if (clienteForm.valid) {
+      this.toastSvc.success('Datos editados correctamente.', 'Éxito', {
+        timeOut: 3000,
+      });
       clienteForm.value.id = this.id; // Asignar el ID del cliente al valor del formulario.
-
       // Llamar al servicio para modificar el cliente y navegar de vuelta a la página principal.
       this.clientesServicio.modificarCliente(clienteForm.value);
       this.router.navigate(['/']); // Redireccionar a la ruta principal.
+    } else {
+      this.toastSvc.error('Por favor, completa todos los campos requeridos.', 'Formulario incompleto', {
+        timeOut: 3000,
+      });
+
     }
   }
 
@@ -85,14 +83,20 @@ export class EditarClienteComponent implements OnInit {
         this.clientesServicio
           .eliminarCliente(this.cliente)
           .then(() => {
-            console.log('Cliente eliminado'); // Mensaje en consola si se elimina exitosamente.
+
+            this.toastSvc.success('Cliente eliminado correctamente.', 'Éxito', {
+              timeOut: 3000,
+            });
+            this.router.navigate(['/']); // Redireccionar a la ruta principal.
           })
           .catch((error: any) => {
             console.error('Error al eliminar el cliente:', error); // Manejo de errores al eliminar el cliente.
             Swal.fire('Error', 'No se pudo eliminar el cliente.', 'error'); // Alerta si ocurre un error.
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        console.log('Eliminación cancelada'); // Mensaje en consola si se cancela la eliminación.
+        this.toastSvc.warning('Eliminación cancelada.', 'Éxito', {
+          timeOut: 3000,
+        });
       }
     });
   }

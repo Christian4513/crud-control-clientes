@@ -26,8 +26,9 @@ export class LoginComponent {
         this.router.navigate(['/']);
       })
       .catch((error) => {
-        this.toastSvc.success('error', 'prueba');
-        // Aquí había un paréntesis extra
+        this.toastSvc.error('Correo electrónico o contraseña incorrectos.', 'Error de inicio de sesión', {
+          timeOut: 3000,
+        });
       });
   }
 
