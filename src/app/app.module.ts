@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'; // Importa el decorador NgModule para 
 import { CommonModule } from '@angular/common'; // Importa CommonModule para utilizar funcionalidades comunes de Angular
 import { environment } from '../environments/environment'; // Importa la configuración del entorno
 import { AngularFireModule } from '@angular/fire/compat'; // Importa AngularFireModule para la integración de Firebase
-import { FirestoreModule, FirestoreSettings } from '@angular/fire/firestore'; // Importa FirestoreModule para el uso de Firestore
+import { FirestoreModule } from '@angular/fire/firestore'; // Importa FirestoreModule para el uso de Firestore
 import { AngularFireAuthModule } from '@angular/fire/compat/auth'; // Importa AngularFireAuthModule para la autenticación con Firebase
 import { FormsModule } from '@angular/forms'; // Importa FormsModule para gestionar formularios en Angular
 

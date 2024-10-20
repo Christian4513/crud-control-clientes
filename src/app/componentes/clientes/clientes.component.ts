@@ -5,7 +5,7 @@ import {
   inject,
   OnInit,
   ViewChild
-  
+
 } from '@angular/core'; // Importa el decorador Component y las interfaces OnInit e inject
 import { FormsModule, NgForm } from '@angular/forms'; // Importa el módulo de formularios de Angular
 import { CommonModule } from '@angular/common'; // Importa el módulo común de Angular
@@ -92,14 +92,7 @@ export class ClientesComponent implements OnInit {
   // no se actualiza la tabla, tengo que ver por que no se actualiza.
   agregar(clienteForm: { value: Cliente; valid: boolean | null }) {
     if (!clienteForm.valid) {
-      this.toastSvc.error(
-        'Por favor llenar el formulario correctamente',
-        'Error de validación',
-        {
-          timeOut: 4000,
-          positionClass: 'toast-top-right',
-        }
-      );
+      this.toastSvc.success('error', 'prueba');
     } else {
       this.clientesServicio.agregarCliente(clienteForm.value);
       this.clienteForm.resetForm();

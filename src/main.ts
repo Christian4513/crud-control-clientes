@@ -21,15 +21,18 @@ import { environment } from './environments/environment';
 
 // Importa rutas y Toastr para notificaciones
 import { routes } from './app/app.routes';
-import { ToastrModule } from 'ngx-toastr';
+import { provideToastr, ToastrModule } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 // Inicializa la aplicación con AppComponent y proveedores
 bootstrapApplication(AppComponent, {
   providers: [
+    provideAnimations ( ) ,  // proveedores de animaciones requeridas
+    provideToastr ( ) ,  // proveedores de Toastr
     importProvidersFrom(
       AngularFireModule.initializeApp(environment.firebaseConfig), // Configuración de Firebase
       AngularFirestoreModule,                                      // Habilita Firestore
-      ToastrModule.forRoot()                                       // Configura Toastr
+      ToastrModule.forRoot(),                                       // Configura Toastr
     ),
     provideHttpClient(),                                           // Proveedor de HTTP
     provideRouter(routes),                                         // Configura el enrutador con rutas

@@ -26,14 +26,9 @@ export class LoginComponent {
         this.router.navigate(['/']);
       })
       .catch((error) => {
-        this.toastSvc.error(
-          'No has iniciado sesión',
-          'Error de validación',
-          {
-            timeOut: 4000,
-            positionClass: 'toast-top-right',
-          }
-        );
-      }); // Asegúrate de cerrar correctamente el catch
+        this.toastSvc.success('error', 'prueba');
+        // Aquí había un paréntesis extra
+      });
   }
+
 }
