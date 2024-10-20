@@ -7,10 +7,9 @@ import { routes } from './app.routes'; // Importa las rutas definidas para la ap
 // Configuración de la aplicación utilizando ApplicationConfig
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimations(), // Proporciona el módulo de animaciones para la aplicación
-    provideToastr({ timeOut: 900, preventDuplicates: true }), // Configura Toastr con un tiempo de espera de 900 ms y evita duplicados
     provideZoneChangeDetection({ eventCoalescing: true }), // Configura la detección de cambios en la zona con coalescencia de eventos
     provideRouter(routes), // Proporciona el enrutador con las rutas definidas
+
   ]
 };
 
