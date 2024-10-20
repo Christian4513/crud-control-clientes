@@ -76,7 +76,7 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-  getSaldoTotal() {
+  getSaldoTotal(): string {
     // Método que calcula el saldo total de todos los clientes
     let saldoTotal: number = 0; // Inicializa el saldo total en 0
     if (this.clientes) {
@@ -86,7 +86,7 @@ export class ClientesComponent implements OnInit {
         saldoTotal += cliente.saldo; // Suma el saldo del cliente actual
       });
     }
-    return saldoTotal; // Retorna el saldo total calculado
+    return this.formatSaldo(saldoTotal); // Retorna el saldo total formateado
   }
 
   // no se actualiza la tabla, tengo que ver por que no se actualiza.
@@ -128,4 +128,19 @@ export class ClientesComponent implements OnInit {
       cliente.saldo.toString().includes(this.searchText)
     );
   }
+
+  formatSaldo(saldo: number): string {
+    if (typeof saldo !== 'number') {
+        return '0 CLP'; // Manejo de caso no válido
+    }
+
+    const millones = saldo / 1_000_000; // Convierte el saldo a millones
+    if (millones >= 1) {
+        return `${millones.toLocaleString('es-CL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} M`; // Formato en millones con separación de miles
+    }
+
+    return `${saldo.toLocaleString('es-CL')} CLP`; // Formato normal
 }
+
+}
+

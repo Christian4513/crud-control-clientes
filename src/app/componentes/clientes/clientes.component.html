@@ -56,7 +56,7 @@
                 *ngFor="let cliente of filteredClientes | paginate: { itemsPerPage: pageSize, currentPage: page }; let i = index">
                 <td>{{(i+1)}}</td>
                 <td>{{cliente.nombre}} {{cliente.apellido}}</td>
-                <td>{{cliente.saldo | currency: 'MNX': '$'}}</td>
+                <td>{{'$'}} {{formatSaldo(cliente.saldo) }}</td>
                 <td>
                   <a routerLink="/cliente/editar/{{cliente.id}}" class="btn btn-secondary">
                     <i class="fas fa-angle-double-right"></i> Editar
@@ -95,7 +95,7 @@
             <!-- Tamaño grande para mostrar el saldo -->
             <h4 class="display-4">
               <!-- Muestra el saldo total formateado como moneda -->
-              {{getSaldoTotal() | currency: 'MNX': '$'}}
+              {{'$'}}{{getSaldoTotal()}}
             </h4>
           </div>
         </div>

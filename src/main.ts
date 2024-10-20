@@ -28,11 +28,11 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 bootstrapApplication(AppComponent, {
   providers: [
     provideAnimations ( ) ,  // proveedores de animaciones requeridas
-    provideToastr ( ) ,  // proveedores de Toastr
+    provideToastr () ,  // proveedores de Toastr
     importProvidersFrom(
       AngularFireModule.initializeApp(environment.firebaseConfig), // Configuración de Firebase
       AngularFirestoreModule,                                      // Habilita Firestore
-      ToastrModule.forRoot(),                                       // Configura Toastr
+      ToastrModule.forRoot({positionClass: 'toast-bottom-right'}),                                       // Configura Toastr
     ),
     provideHttpClient(),                                           // Proveedor de HTTP
     provideRouter(routes),                                         // Configura el enrutador con rutas
