@@ -91,12 +91,17 @@ export class ClientesComponent implements OnInit {
 
   // no se actualiza la tabla, tengo que ver por que no se actualiza.
   agregar(clienteForm: { value: Cliente; valid: boolean | null }) {
-    if (!clienteForm.valid) {
-      this.toastSvc.success('error', 'prueba');
-    } else {
+    if (clienteForm.valid) {
+      this.toastSvc.success('Cliente agregado correctamente.', 'Éxito', {
+        timeOut: 3000,
+      });
       this.clientesServicio.agregarCliente(clienteForm.value);
       this.clienteForm.resetForm();
       this.cerrarModal();
+    } else {
+      this.toastSvc.error('Por favor, completa todos los campos requeridos.', 'Formulario incompleto', {
+        timeOut: 3000,
+      });
     }
   }
 

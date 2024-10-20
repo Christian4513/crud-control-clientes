@@ -11,7 +11,7 @@
 </header>
 
 <!-- Formulario que enviará los datos del nuevo cliente -->
-<form #clienteForm="ngForm" (ngSubmit)="guardar(clienteForm)">
+<form #clienteForm="ngForm">
   <!--Botones-->
   <section id="actions" class="py-4 mb-4 bg-light">
     <div class="container">
@@ -22,7 +22,7 @@
           </a>
         </div>
         <div class="col-md-3">
-          <button type="submit" class="btn btn-success btn-block">
+          <button (click)="guardar(clienteForm)"  type="submit" class="btn btn-success btn-block">
             <i class="fas fa-check"></i>Guardar Cliente
           </button>
         </div>
