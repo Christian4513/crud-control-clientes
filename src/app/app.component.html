@@ -1,8 +1,12 @@
-<app-cabecero></app-cabecero>
+<div class="d-flex flex-column min-vh-100">
+  <!-- Cabecero -->
+  <app-cabecero></app-cabecero>
 
-<router-outlet></router-outlet>
+  <!-- Contenedor principal para el contenido -->
+  <main class="flex-fill">
+    <router-outlet></router-outlet>
+  </main>
 
-
-<app-pie-pagina></app-pie-pagina>
-
-
+  <!-- Pie de página -->
+  <app-pie-pagina></app-pie-pagina>
+</div>

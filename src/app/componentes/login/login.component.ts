@@ -11,17 +11,13 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   email!: string;
   password!: string;
 
   toastSvc = inject(ToastrService); // Inyección del servicio ToastrService para mostrar notificaciones
   router = inject(Router);
   loginService = inject(LoginService);
-
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
   login() {
     this.loginService

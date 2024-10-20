@@ -4,8 +4,8 @@ import {
   ElementRef,
   inject,
   OnInit,
-  ViewChild,
-  viewChild,
+  ViewChild
+  
 } from '@angular/core'; // Importa el decorador Component y las interfaces OnInit e inject
 import { FormsModule, NgForm } from '@angular/forms'; // Importa el módulo de formularios de Angular
 import { CommonModule } from '@angular/common'; // Importa el módulo común de Angular
