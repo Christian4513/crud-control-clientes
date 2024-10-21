@@ -20,10 +20,10 @@ import { Cliente } from '../../modelo/cliente.model'; // Importa la interfaz Cli
 // Importa el módulo de enrutamiento de Angular
 import { RouterModule } from '@angular/router'; // Importa RouterModule
 // Importa el servicio de toastr para mostrar notificaciones
-import { ToastrService } from 'ngx-toastr'; // Importa ToastrService
 import { NumerosService } from '../../servicios/numeros.service';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NotificationService } from '../../servicios/notification.service';
 
 @Component({
   selector: 'app-clientes',
@@ -61,7 +61,7 @@ export class ClientesComponent implements OnInit {
   @ViewChild('botonCerrar') botonCerrar!: ElementRef;
 
   // Inyecciónes de servicios
-  toastSvc = inject(ToastrService); // Inyección del servicio ToastrService para mostrar notificaciones
+  notification = inject(NotificationService); // Inyección del servicio ToastrService para mostrar notificaciones
   clientesServicio = inject(ClienteServicio);
   numeros = inject(NumerosService);
 
@@ -92,16 +92,12 @@ export class ClientesComponent implements OnInit {
   // no se actualiza la tabla, tengo que ver por que no se actualiza.
   agregar(clienteForm: { value: Cliente; valid: boolean | null }) {
     if (clienteForm.valid) {
-      this.toastSvc.success('Cliente agregado correctamente.', 'Éxito', {
-        timeOut: 3000,
-      });
+      this.notification.showSuccess('Cliente agregado correctamente.', 'Éxito');
       this.clientesServicio.agregarCliente(clienteForm.value);
       this.clienteForm.resetForm();
       this.cerrarModal();
     } else {
-      this.toastSvc.error('Por favor, completa todos los campos requeridos.', 'Formulario incompleto', {
-        timeOut: 3000,
-      });
+      this.notification.showError('Por favor, completa todos los campos requeridos.', 'Formulario incompleto');
     }
   }
 
@@ -138,7 +134,6 @@ export class ClientesComponent implements OnInit {
     if (millones >= 1) {
         return `${millones.toLocaleString('es-CL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} M`; // Formato en millones con separación de miles
     }
-
     return `${saldo.toLocaleString('es-CL')} CLP`; // Formato normal
 }
 
