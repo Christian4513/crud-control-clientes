@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../../servicios/login.service';
 import { FormsModule } from '@angular/forms';
+import { NotificationService } from '../../servicios/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit{
   toastSvc = inject(ToastrService); // Inyección del servicio ToastrService para mostrar notificaciones
   router = inject(Router);
   loginService = inject(LoginService);
+  notification = inject(NotificationService);
 
   ngOnInit() {
     this.loginService.getAuth().subscribe(auth => {
@@ -35,9 +37,7 @@ export class LoginComponent implements OnInit{
         this.router.navigate(['/']);
       })
       .catch((error) => {
-        this.toastSvc.error('Correo electrónico o contraseña incorrectos.', 'Error de inicio de sesión', {
-          timeOut: 3000,
-        });
+        this.notification.showError('Correo electrónico o contraseña incorrectos.', 'Error de inicio de sesión');
       });
   }
 

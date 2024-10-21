@@ -7,6 +7,7 @@ import { FormsModule, NgForm } from '@angular/forms'; // Manejo de formularios y
 import { CommonModule } from '@angular/common'; // Módulo básico de Angular con directivas comunes como *ngIf y *ngFor.
 import { NumerosService } from '../../servicios/numeros.service'; // Servicio personalizado que puede tener lógica relacionada con el manejo de números (validaciones).
 import Swal from 'sweetalert2'; // Biblioteca externa para mostrar alertas personalizadas.
+import { NotificationService } from '../../servicios/notification.service';
 
 @Component({
   selector: 'app-editar-cliente', // Selector del componente para su uso en la aplicación.
@@ -31,6 +32,7 @@ export class EditarClienteComponent implements OnInit {
   router = inject(Router); // Servicio de Router para manejar la navegación entre componentes.
   route = inject(ActivatedRoute); // ActivatedRoute permite acceder a parámetros de la ruta activa.
   numeros = inject(NumerosService); // Servicio personalizado para lógica relacionada con números.
+  notification = inject(NotificationService);
 
   id!: string; // Almacena el ID del cliente obtenido desde la URL.
 
@@ -52,18 +54,13 @@ export class EditarClienteComponent implements OnInit {
   guardar(clienteForm: NgForm) {
     // Validación: Si el formulario no es válido, muestra una notificación de error.
     if (clienteForm.valid) {
-      this.toastSvc.success('Datos editados correctamente.', 'Éxito', {
-        timeOut: 3000,
-      });
+      this.notification.showSuccess('Datos editados correctamente.', 'Éxito');
       clienteForm.value.id = this.id; // Asignar el ID del cliente al valor del formulario.
       // Llamar al servicio para modificar el cliente y navegar de vuelta a la página principal.
       this.clientesServicio.modificarCliente(clienteForm.value);
       this.router.navigate(['/']); // Redireccionar a la ruta principal.
     } else {
-      this.toastSvc.error('Por favor, completa todos los campos requeridos.', 'Formulario incompleto', {
-        timeOut: 3000,
-      });
-
+      this.notification.showError('Por favor, completa todos los campos requeridos.', 'Formulario incompleto');
     }
   }
 
@@ -83,20 +80,14 @@ export class EditarClienteComponent implements OnInit {
         this.clientesServicio
           .eliminarCliente(this.cliente)
           .then(() => {
-
-            this.toastSvc.success('Cliente eliminado correctamente.', 'Éxito', {
-              timeOut: 3000,
-            });
+            this.notification.showSuccess('Cliente eliminado correctamente.', 'Éxito');
             this.router.navigate(['/']); // Redireccionar a la ruta principal.
           })
           .catch((error: any) => {
-            console.error('Error al eliminar el cliente:', error); // Manejo de errores al eliminar el cliente.
-            Swal.fire('Error', 'No se pudo eliminar el cliente.', 'error'); // Alerta si ocurre un error.
+            this.notification.showError('No se pudo eliminar el cliente.', 'error');
           });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        this.toastSvc.warning('Eliminación cancelada.', 'Éxito', {
-          timeOut: 3000,
-        });
+        this.notification.showWarning('Eliminación cancelada.', 'Éxito');
       }
     });
   }

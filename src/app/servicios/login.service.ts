@@ -41,7 +41,8 @@ export class LoginService {
   }
 
   async isLoggedIn(): Promise<boolean> {
-    const token = localStorage.getItem('userToken');  // Ejemplo usando un token guardado
-    return !!token;  // Retorna true si existe un token, false si no
+    const user = await this.authService.currentUser;
+    return !!user;
+
   }
 }
