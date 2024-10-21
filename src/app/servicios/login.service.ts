@@ -7,6 +7,7 @@ import { map } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
+
   authService = inject(AngularFireAuth);
   toastSvc = inject(ToastrService)
 
@@ -37,5 +38,10 @@ export class LoginService {
           timeOut: 3000,
         });
       });
+  }
+
+  async isLoggedIn(): Promise<boolean> {
+    const token = localStorage.getItem('userToken');  // Ejemplo usando un token guardado
+    return !!token;  // Retorna true si existe un token, false si no
   }
 }
