@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit{
   email!: string;
   password!: string;
 
-  toastSvc = inject(ToastrService); // Inyección del servicio ToastrService para mostrar notificaciones
   router = inject(Router);
   loginService = inject(LoginService);
   notification = inject(NotificationService);
