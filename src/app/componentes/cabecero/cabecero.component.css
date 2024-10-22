@@ -1,0 +1,5 @@
+.router-link-active {
+  font-weight: bold;
+  color: #007bff; /* Cambia a un color diferente, por ejemplo, azul */
+  text-decoration: underline; /* Para que el enlace activo esté subrayado */
+}
