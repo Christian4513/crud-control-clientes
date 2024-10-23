@@ -13,7 +13,6 @@ import { importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 // Proveedor de enrutamiento que permite definir las rutas de la aplicación.
 
-
 // Importa AngularFire y el entorno de configuración
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -27,17 +26,14 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 // Inicializa la aplicación con AppComponent y proveedores
 bootstrapApplication(AppComponent, {
   providers: [
-    provideAnimations ( ) ,  // proveedores de animaciones requeridas
-    provideToastr () ,  // proveedores de Toastr
+    provideAnimations(),  // Proveedores de animaciones requeridas
+    provideToastr(),  // Proveedores de Toastr
     importProvidersFrom(
       AngularFireModule.initializeApp(environment.firebaseConfig), // Configuración de Firebase
-      AngularFirestoreModule,                                      // Habilita Firestore
-      ToastrModule.forRoot({positionClass: 'toast-bottom-right'}),                                       // Configura Toastr
+      AngularFirestoreModule,  // Habilita Firestore
+      ToastrModule.forRoot({ positionClass: 'toast-bottom-right' })  // Configura Toastr
     ),
-    provideHttpClient(),                                           // Proveedor de HTTP
-    provideRouter(routes),                                         // Configura el enrutador con rutas
+    provideHttpClient(),  // Proveedor de HTTP
+    provideRouter(routes),  // Configura el enrutador con rutas
   ],
-})
-.catch((err) => console.error(err));                               // Manejo de errores
-
-
+}).catch((err) => console.error(err));  // Manejo de errores

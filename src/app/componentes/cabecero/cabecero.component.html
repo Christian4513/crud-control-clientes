@@ -2,53 +2,45 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
   <!-- Contenedor para centrar el contenido y adaptarlo al tamaño de la pantalla -->
   <div class="container">
-    <!-- Enlace a la página de inicio que actúa como marca de la barra -->
+    <!-- Enlace a la página de inicio como marca de la barra -->
     <a routerLink="/" class="navbar-brand">Control Clientes</a>
-    <!-- Botón para colapsar la barra en pantallas pequeñas -->
+    <!-- Botón de colapso para pantallas pequeñas -->
     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-      <!-- Icono del botón de colapso -->
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <!-- Sección colapsable de la barra de navegación -->
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <!-- Lista de navegación principal -->
       <ul *ngIf="isLoggedIn" class="navbar-nav">
-        <!-- Elemento de navegación para la página de inicio -->
         <li class="nav-item px-2">
-          <!-- Enlace a la página de inicio -->
           <a routerLink="/" class="nav-link">Inicio</a>
         </li>
       </ul>
-
-      <!-- Colocamos el dropdown en la esquina derecha -->
+      <!-- Menú desplegable a la derecha -->
       <ul class="navbar-nav ms-auto">
         <li *ngIf="isLoggedIn" class="nav-item dropdown">
-          <!-- Botón desplegable -->
           <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-user"></i>{{loggedInUser}}
           </button>
-          <!-- Menú desplegable -->
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-            <!-- Enlace a configuración -->
             <li><a routerLink="/configuracion" class="dropdown-item">
               <i class="fas fa-cog"></i> Configuración
             </a></li>
           </ul>
         </li>
-        <!-- Botón de Login -->
-        <li *ngIf="!isLoggedIn" class="nav-item">
+        <!-- Enlace a la página de login si no está autenticado y el registro está permitido -->
+        <li *ngIf="!isLoggedIn && permitirRegistro" class="nav-item">
           <a routerLink="/login" class="nav-link" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }">
             <i class="fas fa-sign-in-alt"></i> Login
           </a>
         </li>
-
-        <li *ngIf="!isLoggedIn" class="nav-item">
+        <!-- Enlace a la página de registro si no está autenticado y el registro está permitido -->
+        <li *ngIf="!isLoggedIn && permitirRegistro" class="nav-item">
           <a routerLink="/registrarse" class="nav-link" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }">
             <i class="fas fa-sign-in-alt"></i> Registro
           </a>
         </li>
-
+        <!-- Opción de cerrar sesión si el usuario está autenticado -->
         <li *ngIf="isLoggedIn" class="nav-item">
           <a style="cursor: pointer" (click)="logout()" class="nav-link">
             <i class="fas fa-user-times"></i> Salir

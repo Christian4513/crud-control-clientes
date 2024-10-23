@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../servicios/login.service';
 
+// Definición de la función guardián de autenticación
 export const authGuard: CanActivateFn = async (route, state) => {
   const loginService = inject(LoginService);  // Inyecta el servicio de autenticación
   const router = inject(Router);  // Inyecta el enrutador
@@ -16,8 +17,9 @@ export const authGuard: CanActivateFn = async (route, state) => {
       router.navigate(['/login']);  // Si no está autenticado, redirige al login
       return false;
     }
+
   } catch (error) {
-    console.error('Error al verificar la autenticación', error);
+    console.error('Error al verificar la autenticación', error);  // Muestra un error en la consola
     router.navigate(['/login']);  // Si hay un error, redirige al login
     return false;
   }

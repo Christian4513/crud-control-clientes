@@ -1,14 +1,10 @@
 <!-- Sección que contiene acciones para agregar cliente -->
 <section id="actions" class="py-4 mb-4 bg-light">
-  <!-- Contenedor que centra el contenido y lo adapta al tamaño de la pantalla -->
   <div class="container">
-    <!-- Fila para organizar el contenido en columnas -->
     <div class="row">
-      <!-- Columna que ocupa un cuarto del ancho en pantallas medianas y superiores -->
+      <!-- Columna con botón para abrir el modal de agregar cliente -->
       <div class="col-md-3">
-        <!-- Botón que abre el modal de agregar cliente -->
         <a href="#" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#agregarClienteModal">
-          <!-- Icono y texto del botón -->
           <i class="fas fa-plus"></i> Agregar Cliente
         </a>
       </div>
@@ -18,42 +14,29 @@
 
 <!-- Sección que muestra la lista de clientes -->
 <section id="clientes">
-  <!-- Contenedor que centra el contenido y lo adapta al tamaño de la pantalla -->
   <div class="container">
-    <!-- Fila para organizar el contenido en columnas -->
     <div class="row">
-      <!-- Columna que ocupa tres cuartas partes del ancho en pantallas medianas y superiores -->
+      <!-- Columna principal con la lista de clientes -->
       <div class="col-md-9">
-        <!-- Tarjeta para contener el listado de clientes -->
         <div class="card">
-          <!-- Encabezado de la tarjeta -->
           <div class="card-header d-flex justify-content-between align-items-center">
-            <!-- Título de la sección de clientes a la izquierda -->
             <h4>Listado de Clientes</h4>
-
-            <!-- Input para búsqueda a la derecha -->
+            <!-- Input de búsqueda -->
             <input type="text" [(ngModel)]="searchText" class="form-control w-25" placeholder="Buscar cliente...">
           </div>
-          <!-- Tabla que muestra los clientes con estilo a rayas -->
+          <!-- Tabla con la lista de clientes -->
           <table class="table table-striped">
-            <!-- Encabezado de la tabla con estilo oscuro -->
             <thead class="thead-dark">
               <tr>
-                <!-- Encabezado para el índice -->
                 <th>#</th>
-                <!-- Encabezado para el nombre del cliente -->
                 <th>Nombre</th>
-                <!-- Encabezado para el saldo del cliente -->
                 <th>Saldo</th>
-                <!-- Columna vacía para acciones (editar) -->
                 <th></th>
               </tr>
             </thead>
-            <!-- Cuerpo de la tabla donde se llenarán los datos -->
             <tbody>
-              <!-- Utilizamos el pipe de paginación para iterar sobre los clientes con paginación -->
-              <tr
-                *ngFor="let cliente of filteredClientes | paginate: { itemsPerPage: pageSize, currentPage: page }; let i = index">
+              <!-- Iteración sobre los clientes con paginación -->
+              <tr *ngFor="let cliente of filteredClientes | paginate: { itemsPerPage: pageSize, currentPage: page }; let i = index">
                 <td>{{(i+1)}}</td>
                 <td>{{cliente.nombre}} {{cliente.apellido}}</td>
                 <td>{{'$'}} {{formatSaldo(cliente.saldo) }}</td>
@@ -65,17 +48,15 @@
               </tr>
             </tbody>
           </table>
-          <!-- Componente HTML de Clientes -->
+          <!-- Paginación y controles de visualización -->
           <div class="clientes-container">
-
             <div class="d-flex justify-content-center align-items-center mt-4">
-              <!-- Selector de cantidad de elementos por página -->
+              <!-- Selección de elementos por página -->
               <select [(ngModel)]="pageSize" class="form-select w-auto me-3">
                 <option [value]="5">5</option>
                 <option [value]="10">10</option>
                 <option [value]="20">20</option>
               </select>
-
               <!-- Controles de paginación -->
               <pagination-controls (pageChange)="page = $event" [directionLinks]="true" [autoHide]="true">
               </pagination-controls>
@@ -84,69 +65,45 @@
         </div>
       </div>
 
-      <!-- Columna que ocupa un cuarto del ancho en pantallas medianas y superiores -->
+      <!-- Columna secundaria con tarjetas de saldo total y total de clientes -->
       <div class="col-md-3">
-        <!-- Tarjeta para mostrar el saldo total -->
+        <!-- Tarjeta del saldo total -->
         <div class="card text-center bg-danger text-white mb-3">
-          <!-- Cuerpo de la tarjeta -->
           <div class="card-body">
-            <!-- Título del saldo total -->
             <h3>Saldo Total</h3>
-            <!-- Tamaño grande para mostrar el saldo -->
-            <h4 class="display-4">
-              <!-- Muestra el saldo total formateado como moneda -->
-              {{'$'}}{{getSaldoTotal()}}
-            </h4>
+            <h4 class="display-4">{{'$'}}{{getSaldoTotal()}}</h4>
           </div>
         </div>
-        <!-- Tarjeta para mostrar el total de clientes -->
+        <!-- Tarjeta del total de clientes -->
         <div class="card text-center bg-success text-white mb-3">
-          <!-- Cuerpo de la tarjeta -->
           <div class="card-body">
-            <!-- Título del total de clientes -->
             <h3>Total Clientes</h3>
-            <!-- Tamaño grande para mostrar la cantidad -->
-            <h4 class="display-4">
-              <!-- Muestra la cantidad total de clientes -->
-              <i class="fas fa-users"></i> {{clientes.length}}
-            </h4>
+            <h4 class="display-4"><i class="fas fa-users"></i> {{clientes.length}}</h4>
           </div>
         </div>
       </div>
-      <!-- Fin de tarjetas laterales -->
     </div>
   </div>
 </section>
 
-<!-- Modal que se abrirá para agregar un cliente -->
-<div class="modal fade" id="agregarClienteModal" tabindex="-1" aria-labelledby="agregarClienteModalLabel"
-  aria-hidden="true">
-  <!-- Diálogo del modal -->
+<!-- Modal para agregar un cliente -->
+<div class="modal fade" id="agregarClienteModal" tabindex="-1" aria-labelledby="agregarClienteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <!-- Contenido del modal -->
     <div class="modal-content">
-      <!-- Encabezado del modal con fondo azul y texto blanco -->
+      <!-- Encabezado del modal -->
       <div class="modal-header bg-info text-white">
-        <!-- Título del modal -->
         <h5 class="modal-title" id="agregarClienteModalLabel">Agregar Cliente</h5>
-        <!-- Botón para cerrar el modal -->
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #botonCerrar></button>
       </div>
-
-
-
-      <!-- Formulario que enviará los datos del nuevo cliente -->
+      <!-- Formulario para agregar un nuevo cliente -->
       <form #clienteForm="ngForm" (ngSubmit)="agregar(clienteForm)">
-        <!-- Cuerpo del modal que contiene el formulario -->
         <div class="modal-body">
-          <!-- Grupo de formulario para el nombre -->
+          <!-- Campo de formulario para el nombre -->
           <div class="form-group">
-            <!-- Etiqueta para el campo de nombre -->
             <label for="nombre">Nombre</label>
-            <!-- Campo de texto para ingresar el nombre -->
             <input type="text" name="nombre" class="form-control" autocomplete="new-password" #nombre="ngModel"
-              [(ngModel)]="cliente.nombre" [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required
-              minlength="2">
+                   [(ngModel)]="cliente.nombre" [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required
+                   minlength="2">
             <div [hidden]="!nombre.errors?.['required']" class="invalid-feedback">
               Nombre requerido
             </div>
@@ -155,17 +112,13 @@
             </div>
           </div>
         </div>
-
-        <!-- Cuerpo del modal que contiene el formulario -->
         <div class="modal-body">
-          <!-- Grupo de formulario para el apellido -->
+          <!-- Campo de formulario para el apellido -->
           <div class="form-group">
-            <!-- Etiqueta para el campo de apellido -->
             <label for="apellido">Apellido</label>
-            <!-- Campo de texto para ingresar el apellido -->
             <input type="text" name="apellido" class="form-control" autocomplete="new-password" #apellido="ngModel"
-              [(ngModel)]="cliente.apellido" [ngClass]="{'is-invalid': apellido.errors && apellido.touched}" required
-              minlength="2">
+                   [(ngModel)]="cliente.apellido" [ngClass]="{'is-invalid': apellido.errors && apellido.touched}" required
+                   minlength="2">
             <div [hidden]="!apellido.errors?.['required']" class="invalid-feedback">
               Apellido requerido
             </div>
@@ -174,17 +127,13 @@
             </div>
           </div>
         </div>
-
-        <!-- Cuerpo del modal que contiene el formulario -->
         <div class="modal-body">
-          <!-- Grupo de formulario para el email -->
+          <!-- Campo de formulario para el email -->
           <div class="form-group">
-            <!-- Etiqueta para el campo de email -->
             <label for="email">Email</label>
-            <!-- Campo de texto para ingresar el email -->
             <input type="text" name="email" class="form-control" autocomplete="new-password" #email="ngModel"
-              [(ngModel)]="cliente.email" [ngClass]="{'is-invalid': email.errors && email.touched}" required
-              minlength="2" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                   [(ngModel)]="cliente.email" [ngClass]="{'is-invalid': email.errors && email.touched}" required
+                   minlength="2" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
             <div [hidden]="!email.errors?.['required']" class="invalid-feedback">
               Email requerido
             </div>
@@ -193,25 +142,20 @@
             </div>
           </div>
         </div>
-
-        <!-- Cuerpo del modal que contiene el formulario -->
         <div class="modal-body">
-          <!-- Grupo de formulario para el saldo -->
+          <!-- Campo de formulario para el saldo -->
           <div class="form-group">
-            <!-- Etiqueta para el campo de saldo -->
             <label for="saldo">Saldo</label>
-            <!-- Campo numérico para ingresar el saldo -->
             <input type="number" name="saldo" class="form-control" autocomplete="new-password" #saldo="ngModel"
-              [(ngModel)]="cliente.saldo" [ngClass]="{'is-invalid': saldo.errors && saldo.touched}" required min="0"
-              (keypress)="soloNumeros($event)">
+                   [(ngModel)]="cliente.saldo" [ngClass]="{'is-invalid': saldo.errors && saldo.touched}" required min="0"
+                   (keypress)="soloNumeros($event)">
             <div [hidden]="!saldo.errors?.['required']" class="invalid-feedback">
               Saldo requerido
             </div>
           </div>
         </div>
-        <!-- Pie del modal -->
+        <!-- Pie del modal con botón para guardar el nuevo cliente -->
         <div class="modal-footer">
-          <!-- Botón para guardar los datos del nuevo cliente -->
           <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
       </form>

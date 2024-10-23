@@ -1,1 +1,67 @@
-<p>configuracion works!</p>
+<!-- Encabezado principal con un fondo de color 'info' y texto en blanco -->
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <!-- Título del encabezado con un ícono de configuración -->
+        <h1>
+          <i class="fas fa-user"></i>Configuración
+        </h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Sección de botones para acciones adicionales -->
+<section id="actions" class="py-4 mb-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <!-- Botón para regresar al inicio -->
+      <div class="col-md-3">
+        <a routerLink="/" class="btn btn-light btn-block">
+          <i class="fas fa-arrow-left"></i>Regresar al Inicio
+        </a>
+      </div>
+      <!-- Botón para guardar los cambios en la configuración -->
+      <div class="col-md-3">
+        <button class="btn btn-success btn-block" type="submit" (click)="guardar()">
+          <i class="fas fa-check"></i>Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección de configuración -->
+<section id="configuracion">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <!-- Título de la tarjeta -->
+            <h4>Editar Configuración</h4>
+          </div>
+          <div class="card-body">
+            <!-- Campo de formulario para permitir el registro de usuarios -->
+            <fieldset class="form-group">
+              <legend>Permitir Registro de Usuarios</legend>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    name="permitirRegistro"
+                    [(ngModel)]="permitirRegistro"
+                    [checked]="permitirRegistro">
+                  {{ permitirRegistro ? 'Si' : 'No' }}
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

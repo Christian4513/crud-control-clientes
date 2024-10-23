@@ -1,7 +1,9 @@
+<!-- Encabezado principal con un fondo de color 'info' y texto en blanco -->
 <header id="main-header" class="py-2 bg-info text-white">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
+        <!-- Título del encabezado con un ícono de usuario -->
         <h1>
           <i class="fas fa-user"></i>Editar Cliente
         </h1>
@@ -10,27 +12,29 @@
   </div>
 </header>
 
-<!-- Formulario que enviará los datos del nuevo cliente -->
 <form #clienteForm="ngForm">
-  <!--Botones-->
+  <!-- Sección de botones de acción -->
   <section id="actions" class="py-4 mb-4 bg-light">
     <div class="container">
       <div class="row">
+        <!-- Botón para regresar al inicio -->
         <div class="col-md-3">
           <a routerLink="/" class="btn btn-light btn-block">
             <i class="fas fa-arrow-left"></i>Regresar al Inicio
           </a>
         </div>
+        <!-- Botón para guardar los cambios -->
         <div class="col-md-3">
-          <button (click)="guardar(clienteForm)"  type="submit" class="btn btn-success btn-block">
+          <button (click)="guardar(clienteForm)" type="submit" class="btn btn-success btn-block">
             <i class="fas fa-check"></i>Guardar Cliente
           </button>
         </div>
+        <!-- Botón para eliminar el cliente -->
         <div class="col-md-3">
           <button (click)="eliminar()" class="btn btn-danger btn-block">
-              <i class="fas fa-trash"></i> Eliminar Cliente
+            <i class="fas fa-trash"></i>Eliminar Cliente
           </button>
-      </div>
+        </div>
       </div>
     </div>
   </section>
@@ -41,16 +45,16 @@
         <div class="col">
           <div class="card">
             <div class="card-header">
+              <!-- Encabezado del formulario -->
               <h4>Editar Cliente</h4>
             </div>
             <div class="card-body">
+              <!-- Campo de formulario para el nombre del cliente -->
               <div class="form-group">
-
                 <label for="nombre">Nombre</label>
-
                 <input type="text" name="nombre" class="form-control" autocomplete="new-password" #nombre="ngModel"
-                  [(ngModel)]="cliente.nombre" [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required
-                  minlength="2">
+                       [(ngModel)]="cliente.nombre" [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required
+                       minlength="2">
                 <div [hidden]="!nombre.errors?.['required']" class="invalid-feedback">
                   Nombre requerido
                 </div>
@@ -59,14 +63,12 @@
                 </div>
               </div>
 
-              <!-- Grupo de formulario para el apellido -->
+              <!-- Campo de formulario para el apellido del cliente -->
               <div class="form-group">
-                <!-- Etiqueta para el campo de apellido -->
                 <label for="apellido">Apellido</label>
-                <!-- Campo de texto para ingresar el apellido -->
                 <input type="text" name="apellido" class="form-control" autocomplete="new-password" #apellido="ngModel"
-                  [(ngModel)]="cliente.apellido" [ngClass]="{'is-invalid': apellido.errors && apellido.touched}"
-                  required minlength="2">
+                       [(ngModel)]="cliente.apellido" [ngClass]="{'is-invalid': apellido.errors && apellido.touched}"
+                       required minlength="2">
                 <div [hidden]="!apellido.errors?.['required']" class="invalid-feedback">
                   Apellido requerido
                 </div>
@@ -75,14 +77,12 @@
                 </div>
               </div>
 
-              <!-- Grupo de formulario para el email -->
+              <!-- Campo de formulario para el email del cliente -->
               <div class="form-group">
-                <!-- Etiqueta para el campo de email -->
                 <label for="email">Email</label>
-                <!-- Campo de texto para ingresar el email -->
                 <input type="text" name="email" class="form-control" autocomplete="new-password" #email="ngModel"
-                  [(ngModel)]="cliente.email" [ngClass]="{'is-invalid': email.errors && email.touched}" required
-                  minlength="2" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                       [(ngModel)]="cliente.email" [ngClass]="{'is-invalid': email.errors && email.touched}" required
+                       minlength="2" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
                 <div [hidden]="!email.errors?.['required']" class="invalid-feedback">
                   Email requerido
                 </div>
@@ -91,14 +91,12 @@
                 </div>
               </div>
 
-              <!-- Grupo de formulario para el saldo -->
+              <!-- Campo de formulario para el saldo del cliente -->
               <div class="form-group">
-                <!-- Etiqueta para el campo de saldo -->
                 <label for="saldo">Saldo</label>
-                <!-- Campo numérico para ingresar el saldo -->
                 <input type="number" name="saldo" class="form-control" autocomplete="new-password" #saldo="ngModel"
-                  [(ngModel)]="cliente.saldo" [ngClass]="{'is-invalid': saldo.errors && saldo.touched}" required min="0"
-                  (keypress)="soloNumeros($event)">
+                       [(ngModel)]="cliente.saldo" [ngClass]="{'is-invalid': saldo.errors && saldo.touched}" required
+                       min="0" (keypress)="soloNumeros($event)">
                 <div [hidden]="!saldo.errors?.['required']" class="invalid-feedback">
                   Saldo requerido
                 </div>
@@ -110,3 +108,4 @@
     </div>
   </section>
 </form>
+
