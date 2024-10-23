@@ -1,12 +1,18 @@
 <div class="d-flex flex-column min-vh-100">
+  <!-- Contenedor principal que utiliza Flexbox para estructurar la página verticalmente -->
+
   <!-- Cabecero -->
   <app-cabecero></app-cabecero>
+  <!-- Componente de cabecero para la parte superior de la página -->
 
   <!-- Contenedor principal para el contenido -->
   <main class="flex-fill">
     <router-outlet></router-outlet>
+    <!-- Componente que maneja las rutas y muestra el componente correspondiente -->
   </main>
 
   <!-- Pie de página -->
   <app-pie-pagina></app-pie-pagina>
+  <!-- Componente de pie de página para la parte inferior de la página -->
 </div>
+

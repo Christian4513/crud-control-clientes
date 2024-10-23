@@ -1,35 +1,35 @@
-import { Injectable } from '@angular/core'; // Importa el decorador Injectable para permitir la inyección de dependencias
-import {
-  AngularFirestore, // Importa el módulo AngularFirestore para interactuar con Firestore
-  AngularFirestoreCollection, // Importa AngularFirestoreCollection para manejar colecciones en Firestore
-  AngularFirestoreDocument, // Importa AngularFirestoreDocument para manejar documentos en Firestore
-} from '@angular/fire/compat/firestore'; // Importa compatibilidad con Firestore
-import { Cliente } from '../modelo/cliente.model'; // Importa la interfaz o clase Cliente que representa un cliente
-import { map, Observable } from 'rxjs'; // Importa operadores de RxJS y la clase Observable
+import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { Cliente } from '../modelo/cliente.model';
+import { map, Observable } from 'rxjs';
 
+// Define un servicio global disponible en toda la aplicación
 @Injectable({
-  providedIn: 'root', // Hace que el servicio esté disponible en toda la aplicación
+  providedIn: 'root',
 })
 export class ClienteServicio {
-  clientesColeccion!: AngularFirestoreCollection<Cliente>; // Colección de clientes en Firestore
-  clienteDoc!: AngularFirestoreDocument<Cliente>; // Documento de un cliente específico
-  clientes!: Observable<Cliente[]>; // Observable que contendrá la lista de clientes
-  cliente!: Observable<Cliente>; // Observable que contendrá un cliente específico
+  // Colección de clientes en Firestore
+  clientesColeccion!: AngularFirestoreCollection<Cliente>;
+  // Documento de un cliente específico
+  clienteDoc!: AngularFirestoreDocument<Cliente>;
+  // Observable que contendrá la lista de clientes
+  clientes!: Observable<Cliente[]>;
+  // Observable que contendrá un cliente específico
+  cliente!: Observable<Cliente>;
 
+  // Constructor que inyecta el servicio AngularFirestore
   constructor(private db: AngularFirestore) {
-    // Constructor que inyecta AngularFirestore
+    // Inicializa la colección de clientes y la ordena por nombre
     this.clientesColeccion = db.collection(
       'clientes',
-      (
-        ref // Inicializa la colección de clientes y ordena por nombre
-      ) => ref.orderBy('nombre', 'asc')
+      ref => ref.orderBy('nombre', 'asc')
     );
   }
 
+  // Método para obtener la lista de clientes
   getClientes(): Observable<Cliente[]> {
-    // Método para obtener la lista de clientes
+    // Obtiene los cambios en la colección de clientes
     this.clientes = this.clientesColeccion.snapshotChanges().pipe(
-      // Obtiene los cambios en la colección de clientes
       map((cambios) => {
         return cambios.map((accion) => {
           const datos = accion.payload.doc.data() as Cliente; // Extrae los datos del documento como Cliente
@@ -38,14 +38,15 @@ export class ClienteServicio {
         });
       })
     );
-
     return this.clientes; // Retorna el observable de clientes
   }
 
+  // Método para agregar un nuevo cliente a la colección
   agregarCliente(cliente: Cliente) {
     this.clientesColeccion.add(cliente);
   }
 
+  // Método para obtener un cliente específico por su ID
   getCliente(id: string) {
     this.clienteDoc = this.db.doc<Cliente>(`clientes/${id}`);
     this.cliente = this.clienteDoc.snapshotChanges().pipe(
@@ -59,15 +60,16 @@ export class ClienteServicio {
         }
       })
     );
-
-    return this.cliente;
+    return this.cliente; // Retorna el observable del cliente
   }
 
+  // Método para modificar los datos de un cliente existente
   modificarCliente(cliente: Cliente) {
     this.clienteDoc = this.db.doc(`clientes/${cliente.id}`);
     this.clienteDoc.update(cliente);
   }
 
+  // Método para eliminar un cliente de la colección
   eliminarCliente(cliente: Cliente): Promise<void> {
     this.clienteDoc = this.db.doc(`clientes/${cliente.id}`);
     return this.clienteDoc.delete();

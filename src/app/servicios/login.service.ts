@@ -3,54 +3,62 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 
+// Define un servicio global disponible en la aplicación
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-
+  // Inyecta el servicio de autenticación de Firebase
   authService = inject(AngularFireAuth);
-  toastSvc = inject(ToastrService)
+  // Inyecta el servicio de notificaciones Toastr
+  toastSvc = inject(ToastrService);
 
+  // Método para iniciar sesión con correo electrónico y contraseña
   login(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.authService
         .signInWithEmailAndPassword(email, password)
-        .then((datos) => resolve(datos))
-        .catch((error) => reject(error));
+        .then((datos) => resolve(datos)) // Resuelve la promesa si el inicio de sesión es exitoso
+        .catch((error) => reject(error)); // Rechaza la promesa si hay un error
     });
   }
 
-  getAuth(){
+  // Obtiene el estado de autenticación del usuario
+  getAuth() {
     return this.authService.authState.pipe(
-      map(auth => auth)
+      map(auth => auth) // Mapea el estado de autenticación
     );
   }
 
+  // Método para cerrar sesión
   logout() {
     this.authService.signOut()
       .then(() => {
+        // Muestra una notificación de éxito al cerrar sesión
         this.toastSvc.success('Sesión cerrada exitosamente.', 'Cierre de sesión', {
           timeOut: 3000,
         });
       })
       .catch(error => {
-        this.toastSvc.error('Error al iniciar sesión. Verifica tus credenciales.', 'Error de autenticación', {
+        // Muestra una notificación de error si ocurre un problema
+        this.toastSvc.error('Error al cerrar sesión.', 'Error de autenticación', {
           timeOut: 3000,
         });
       });
   }
 
+  // Verifica si el usuario está autenticado
   async isLoggedIn(): Promise<boolean> {
     const user = await this.authService.currentUser;
-    return !!user;
-
+    return !!user; // Retorna true si el usuario está autenticado, false en caso contrario
   }
 
-  registrarse(email: string, password: string){
-    return new Promise((resolve, reject)=> {
+  // Método para registrar un nuevo usuario con correo y contraseña
+  registrarse(email: string, password: string) {
+    return new Promise((resolve, reject) => {
       this.authService.createUserWithEmailAndPassword(email, password)
-      .then(datos => resolve(datos),
-      error => reject(error))
+        .then(datos => resolve(datos)) // Resuelve la promesa si el registro es exitoso
+        .catch(error => reject(error)); // Rechaza la promesa si hay un error
     });
   }
 }
