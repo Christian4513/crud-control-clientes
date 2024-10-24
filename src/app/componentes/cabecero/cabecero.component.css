@@ -3,3 +3,16 @@
   color:#FFFFFF; /* Cambia a un color diferente, por ejemplo, azul */
   text-decoration: underline; /* Para que el enlace activo esté subrayado */
 }
+
+.custom-toggler {
+  padding: 0.25rem 0.5rem; /* Ajusta el padding para reducir el tamaño del botón */
+  border: none; /* Quita el borde si no lo deseas */
+}
+
+.custom-toggler .navbar-toggler-icon {
+  width: 20px;  /* Ajusta el ancho del icono */
+  height: 20px; /* Ajusta la altura del icono */
+}
+
+
+
