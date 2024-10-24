@@ -22,10 +22,13 @@
           <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-user"></i>{{loggedInUser}}
           </button>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-            <li><a routerLink="/configuracion" class="dropdown-item">
-              <i class="fas fa-cog"></i> Configuración
-            </a></li>
+          <!-- Dropdown de configuración visible solo para administradores -->
+          <ul *ngIf="isAdmin" class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <a routerLink="/configuracion" class="dropdown-item">
+                <i class="fas fa-cog"></i> Configuración
+              </a>
+            </li>
           </ul>
         </li>
         <!-- Enlace a la página de login si no está autenticado y el registro está permitido -->
