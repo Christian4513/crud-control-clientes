@@ -30,15 +30,18 @@
               <tr>
                 <th>#</th>
                 <th>Nombre</th>
+                <th>Email</th>
                 <th>Saldo</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               <!-- Iteración sobre los clientes con paginación -->
-              <tr *ngFor="let cliente of filteredClientes | paginate: { itemsPerPage: pageSize, currentPage: page }; let i = index">
+              <tr
+                *ngFor="let cliente of filteredClientes | paginate: { itemsPerPage: pageSize, currentPage: page }; let i = index">
                 <td>{{(i+1)}}</td>
                 <td>{{cliente.nombre}} {{cliente.apellido}}</td>
+                <td>{{cliente.email}}</td>
                 <td>{{'$'}} {{formatSaldo(cliente.saldo) }}</td>
                 <td>
                   <a routerLink="/cliente/editar/{{cliente.id}}" class="btn btn-secondary">
@@ -87,7 +90,8 @@
 </section>
 
 <!-- Modal para agregar un cliente -->
-<div class="modal fade" id="agregarClienteModal" tabindex="-1" aria-labelledby="agregarClienteModalLabel" aria-hidden="true">
+<div class="modal fade" id="agregarClienteModal" tabindex="-1" aria-labelledby="agregarClienteModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Encabezado del modal -->
@@ -102,8 +106,8 @@
           <div class="form-group">
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" class="form-control" autocomplete="new-password" #nombre="ngModel"
-                   [(ngModel)]="cliente.nombre" [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required
-                   minlength="2">
+              [(ngModel)]="cliente.nombre" [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required
+              minlength="2">
             <div [hidden]="!nombre.errors?.['required']" class="invalid-feedback">
               Nombre requerido
             </div>
@@ -117,8 +121,8 @@
           <div class="form-group">
             <label for="apellido">Apellido</label>
             <input type="text" name="apellido" class="form-control" autocomplete="new-password" #apellido="ngModel"
-                   [(ngModel)]="cliente.apellido" [ngClass]="{'is-invalid': apellido.errors && apellido.touched}" required
-                   minlength="2">
+              [(ngModel)]="cliente.apellido" [ngClass]="{'is-invalid': apellido.errors && apellido.touched}" required
+              minlength="2">
             <div [hidden]="!apellido.errors?.['required']" class="invalid-feedback">
               Apellido requerido
             </div>
@@ -132,8 +136,8 @@
           <div class="form-group">
             <label for="email">Email</label>
             <input type="text" name="email" class="form-control" autocomplete="new-password" #email="ngModel"
-                   [(ngModel)]="cliente.email" [ngClass]="{'is-invalid': email.errors && email.touched}" required
-                   minlength="2" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+              [(ngModel)]="cliente.email" [ngClass]="{'is-invalid': email.errors && email.touched}" required
+              minlength="2" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
             <div [hidden]="!email.errors?.['required']" class="invalid-feedback">
               Email requerido
             </div>
@@ -147,8 +151,8 @@
           <div class="form-group">
             <label for="saldo">Saldo</label>
             <input type="number" name="saldo" class="form-control" autocomplete="new-password" #saldo="ngModel"
-                   [(ngModel)]="cliente.saldo" [ngClass]="{'is-invalid': saldo.errors && saldo.touched}" required min="0"
-                   (keypress)="soloNumeros($event)">
+              [(ngModel)]="cliente.saldo" [ngClass]="{'is-invalid': saldo.errors && saldo.touched}" required min="0"
+              (keypress)="soloNumeros($event)">
             <div [hidden]="!saldo.errors?.['required']" class="invalid-feedback">
               Saldo requerido
             </div>
