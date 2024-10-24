@@ -23,7 +23,8 @@ import { authGuard } from './guardianes/auth.guard';
 // Importa el guardián de autenticación
 
 import { configuracionGuard } from './guardianes/configuracion.guard';
-// Importa el guardián de configuración
+import { adminGuard } from './guardianes/admin.guard';
+// Importa el guardián de configuración y el guardián de administrador
 
 // Define las rutas de la aplicación
 export const routes: Routes = [
@@ -50,7 +51,7 @@ export const routes: Routes = [
   {
     path: 'configuracion',
     component: ConfiguracionComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard, adminGuard]
   },
   // Ruta para la configuración que muestra el ConfiguracionComponent
 
@@ -67,4 +68,5 @@ export const routes: Routes = [
   }
   // Ruta wildcard que muestra el NoEncontradoComponent para cualquier ruta no definida
 ];
+
 
