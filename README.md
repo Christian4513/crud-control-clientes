@@ -1,27 +1,83 @@
 # ControlClientes
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.8.
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 18.2.8.
 
-## Development server
+## Descripción
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+ControlClientes es una aplicación web para la gestión de clientes, que permite registrar información basica de clientes la cual se puede consultar posteriormente, filtrar para encontrar informacion puntual, editar y eliminar. Esta aplicación utiliza Angular 18, Firebase para autenticación, Firestore para almacenamiento de datos, ngx-toastr para notificaciones y otras librerias que aportar pequeñas funcionalidades.
 
-## Code scaffolding
+## Características
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Gestión de Clientes**: Añadir, editar y eliminar clientes.
+- **Autenticación de Usuarios**: Inicio de sesión y registro seguro usando Firebase Authentication.
+- **Acceso Basado en Roles**: Solo los administradores pueden acceder y modificar configuraciones, pero en si todos pueden añadir, ediatr y eliminar clientes.
+- **Datos en Tiempo Real**: Utiliza Firestore para almacenar y recuperar datos de clientes en tiempo real.
+- **Notificaciones**: Notificaciones integradas usando ngx-toastr.
 
-## Build
+## Requisitos Previos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Antes de comenzar, asegúrate de tener instalado Node.js y Angular CLI en tu sistema.
 
-## Running unit tests
+1. **Node.js**: Puedes descargar e instalar Node.js desde [aquí](https://nodejs.org/).
+2. **Angular CLI**: Instálalo globalmente utilizando npm:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   ```bash
+   npm install -g @angular/cli
+   ```
 
-## Running end-to-end tests
+## Configuración y Despliegue
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Para configurar y desplegar la aplicación, sigue estos pasos:
 
-## Further help
+### Clonar el repositorio:
+```bash
+git clone https://github.com/tu-repo/ControlClientes.git
+cd ControlClientes
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Instalar dependencias:
+```bash
+npm install
+```
+
+### Configurar Firebase:
+Crea un proyecto de Firebase en Firebase Console. Añade tu configuración de Firebase a `src/environments/environment.ts`. Debe verse algo así:
+
+```typescript
+export const environment = {
+  production: false,
+  firebaseConfig: {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  }
+};
+```
+
+### Ejecutar la aplicación:
+```bash
+ng serve
+```
+
+### Abrir en el navegador:
+Abre tu navegador y navega a [http://localhost:4200/](http://localhost:4200/).
+
+## Servidor de Desarrollo
+Ejecuta `ng serve` para un servidor de desarrollo. Navega a [http://localhost:4200/](http://localhost:4200/). La aplicación se recargará automáticamente si cambias cualquier archivo fuente.
+
+## Generar Código
+Ejecuta `ng generate component nombre-del-componente` para generar un nuevo componente. También puedes usar `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Construcción
+Ejecuta `ng build` para construir el proyecto. Los artefactos de construcción serán almacenados en el directorio `dist/`.
+
+## Ayuda Adicional
+Para obtener más ayuda sobre Angular CLI, usa `ng help` o visita la página de Angular CLI para ver la descripción general y referencia de comandos.
+
+## Licencia
+Este proyecto no tiene una licencia formal. Si deseas utilizar el código para fines educativos o comerciales, lo puedes realizar. 
+
+
