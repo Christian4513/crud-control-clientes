@@ -31,7 +31,7 @@
         </div>
         <!-- Botón para eliminar el cliente -->
         <div class="col-md-3">
-          <button (click)="eliminar()" class="btn btn-danger btn-block">
+          <button class="btn btn-danger btn-block" (click)="openModal()">
             <i class="fas fa-trash"></i>Eliminar Cliente
           </button>
         </div>
@@ -109,3 +109,15 @@
   </section>
 </form>
 
+<ng-template #modalTemplate>
+  <div class="modal-header">
+    <h5 class="modal-title">¿Deseas eliminar este registro?</h5>
+  </div>
+  <div class="modal-body">
+    ¡No podrás revertir esto!
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="confirmarEliminarCliente()">Sí, eliminar</button>
+  </div>
+</ng-template>

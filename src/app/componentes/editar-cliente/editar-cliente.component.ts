@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Cliente } from '../../modelo/cliente.model';
 import { ToastrService } from 'ngx-toastr';
 import { ClienteServicio } from '../../servicios/cliente.service';
@@ -6,8 +6,9 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NumerosService } from '../../servicios/numeros.service';
-import Swal from 'sweetalert2';
 import { NotificationService } from '../../servicios/notification.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-editar-cliente', // Define el selector del componente
@@ -32,7 +33,11 @@ export class EditarClienteComponent implements OnInit {
   route = inject(ActivatedRoute); // ActivatedRoute para los parámetros de ruta
   numeros = inject(NumerosService); // Servicio para validaciones numéricas
   notification = inject(NotificationService); // Servicio de Notificaciones
+  modalService = inject(BsModalService)
   id!: string; // ID del cliente
+
+  @ViewChild('modalTemplate') modalTemplate!: TemplateRef<any>; // Referencia al template del modal
+  bsModalRef!: BsModalRef<unknown>;
 
   ngOnInit() { // Inicializa el componente
     this.id = this.route.snapshot.params['id']; // Obtiene el ID de la URL
@@ -55,27 +60,24 @@ export class EditarClienteComponent implements OnInit {
       this.notification.showError('Por favor, completa todos los campos requeridos.', 'Formulario incompleto'); // Muestra error
     }
   }
+openModal() {
+    // Abre el modal
+    this.bsModalRef = this.modalService.show(this.modalTemplate);
 
-  eliminar() { // Elimina el cliente
-    Swal.fire({
-      title: '¿Estás seguro?', // Título de la alerta
-      text: '¡No podrás revertir esto!', // Texto de advertencia
-      icon: 'warning', // Ícono de advertencia
-      showCancelButton: true, // Muestra botón de cancelar
-      confirmButtonText: 'Sí, eliminar', // Texto del botón confirmar
-      cancelButtonText: 'Cancelar', // Texto del botón cancelar
-      reverseButtons: true, // Invierte los botones
-    }).then((result) => {
-      if (result.isConfirmed) { // Si se confirma
-        this.clientesServicio.eliminarCliente(this.cliente).then(() => {
-          this.notification.showSuccess('Cliente eliminado correctamente.', 'Éxito'); // Muestra éxito
-          this.router.navigate(['/']); // Redirecciona a la principal
-        }).catch((error: any) => {
-          this.notification.showError('No se pudo eliminar el cliente.', 'Error'); // Muestra error
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        this.notification.showWarning('Eliminación cancelada.', 'Cancelado'); // Muestra cancelación
-      }
-    });
+
   }
+
+  confirmarEliminarCliente() {
+    this.clientesServicio.eliminarCliente(this.cliente)
+      .then(() => {
+        this.notification.showSuccess('Cliente eliminado correctamente.', 'Éxito'); // Muestra éxito
+        this.bsModalRef.hide(); // Cierra el modal
+        this.router.navigate(['/']); // Redirige después de cerrar el modal
+      })
+      .catch(err => {
+        this.notification.showError('Error al eliminar el cliente.', 'Error'); // Muestra error
+        console.error(err); // Log del error en la consola para depuración
+      });
+  }
+
 }
